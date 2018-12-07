@@ -1,0 +1,32 @@
+<h1>Listing Deeds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Who</th>
+      <th>Title</th>
+      <th>When</th>
+      <th>Score</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for deed <- @deeds do %>
+    <tr>
+      <td><%= deed.user.name %></td>
+      <td><%= deed.title %></td>
+      <td><%= deed.when %></td>
+      <td><%= deed.score %></td>
+
+      <td>
+        <%= link "Show", to: Routes.deed_path(@conn, :show, deed) %>
+        <%= link "Edit", to: Routes.deed_path(@conn, :edit, deed) %>
+        <%= link "Delete", to: Routes.deed_path(@conn, :delete, deed), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Deed", to: Routes.deed_path(@conn, :new) %></span>

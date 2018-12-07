@@ -49,7 +49,7 @@ defmodule Donegood.MixProject do
       {:ueberauth_twitter, "~> 0.2"},
       {:ueberauth_google, "~> 0.2"},
       {:oauth, github: "tim/erlang-oauth"},
-
+      {:ecto_enum, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

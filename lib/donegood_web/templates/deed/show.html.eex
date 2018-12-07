@@ -1,0 +1,23 @@
+<h1>Show Deed</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @deed.title %>
+  </li>
+
+  <li>
+    <strong>When:</strong>
+    <%= @deed.when %>
+  </li>
+
+  <li>
+    <strong>Score:</strong>
+    <%= @deed.score %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.deed_path(@conn, :edit, @deed) %></span>
+<span><%= link "Back", to: Routes.deed_path(@conn, :index) %></span>

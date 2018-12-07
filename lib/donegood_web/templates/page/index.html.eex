@@ -1,2 +1,3 @@
 
   <%# render "_overview.html", conn: @conn, current_user: @current_user %>
+<a href="/deeds">All the deeds</a>
