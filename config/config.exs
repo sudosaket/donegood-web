@@ -17,6 +17,36 @@ config :donegood, DonegoodWeb.Endpoint,
   render_errors: [view: DonegoodWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Donegood.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :ueberauth, Ueberauth,
+  providers: [
+    facebook: { Ueberauth.Strategy.Facebook, [] },
+    twitter: { Ueberauth.Strategy.Twitter, [] },
+    google: {Ueberauth.Strategy.Google, []},
+    identity: { Ueberauth.Strategy.Identity, [
+      callback_methods: ["POST"],
+      uid_field: :username,
+      nickname_field: :username,
+      ] }
+  ]
+config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
+  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
+  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
+  consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
+
+config :donegood, Donegood.Auth.Guardian,
+  issuer: "donegood",
+  secret_key: "D9LNECLvr/AV2B26DEZGihfTU0OyWQ9puTNVpDv79xaRdVIIdk9qHfIYg1DPHTOe"
+
+
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -24,6 +54,7 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

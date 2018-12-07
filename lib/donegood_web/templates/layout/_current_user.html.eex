@@ -1,0 +1,10 @@
+
+<%= if current_user_exists(@conn) do %>
+  <p> You're logged in!
+    <a href="/auth/logout">Log out</a>
+  </p>
+<% else %>
+  <a href="/auth/facebook?scope=email,user_friends" class="">Log in with Facebook</a>
+  | <a href="/auth/twitter">Twitter</a>
+  | <a href="/auth/google">Google</a>
+<% end %>
