@@ -4,6 +4,8 @@ defmodule DonegoodWeb.DeedController do
   alias Donegood.Deeds
   alias Donegood.Deeds.Deed
 
+  plug Guardian.Plug.EnsureAuthenticated
+
   def index(conn, _params) do
     deeds = Deeds.list_deeds()
     render(conn, "index.html", deeds: deeds)
@@ -38,13 +40,14 @@ defmodule DonegoodWeb.DeedController do
 
   def edit(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
+    ensure_owned_by_current_user!(conn,deed)
     changeset = Deeds.change_deed(deed)
     render(conn, "edit.html", deed: deed, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "deed" => deed_params}) do
     deed = Deeds.get_deed!(id)
-
+    ensure_owned_by_current_user!(conn,deed)
     case Deeds.update_deed(deed, deed_params) do
       {:ok, deed} ->
         conn
@@ -58,10 +61,20 @@ defmodule DonegoodWeb.DeedController do
 
   def delete(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
+    ensure_owned_by_current_user!(conn,deed)
     {:ok, _deed} = Deeds.delete_deed(deed)
 
     conn
     |> put_flash(:info, "Deed deleted successfully.")
     |> redirect(to: Routes.deed_path(conn, :index))
+  end
+
+
+  def ensure_owned_by_current_user!(conn, deed) do
+    if (conn.assigns.current_user.id != deed.user_id) do
+      conn
+      |> Phoenix.Controller.put_flash(:error, "Not your deed")
+      |> halt()
+    end
   end
 end
