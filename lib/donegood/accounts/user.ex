@@ -12,7 +12,7 @@ defmodule Donegood.Accounts.User do
     field :name, :string
     field :twitter_id, :string
 
-    has_many :deeds, DoneGood.Deed
+    has_many :deeds, DoneGood.Deeds.Deed
 
     timestamps()
   end
