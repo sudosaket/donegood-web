@@ -34,7 +34,7 @@ defmodule DonegoodWeb.Router do
     pipe_through [:browser, :browser_auth]
 
     get "/", PageController, :index
-    # resources "/users", UserController
+    resources "/users", UserController
     resources "/deeds", DeedController
   end
 
