@@ -18,7 +18,12 @@
   <%= error_tag f, :when %>
 
   <%= label f, :score %>
-  <%= number_input f, :score %>
+  <%= for value <- [5,4,3,2,1,-1,-2,-3,-4,-5] do %>
+    <span class="score-button">
+      <%= radio_button f, :score, value %>
+      <%= label f, String.to_atom("score_" <> (if value < 0, do: "_", else: "" ) <> inspect(abs(value))), Kernel.inspect(value) %>
+    </span>
+  <% end %>
   <%= error_tag f, :score %>
 
   <%= label f, :repeats %>

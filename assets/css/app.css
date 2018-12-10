@@ -26,3 +26,10 @@ td ul li {
   margin: 0;
   font-size: 70%;
 }
+.score-button {
+  border: 1px solid #eee;
+  padding: 8px;
+}
+.score-button label {
+  display: inline;
+}
