@@ -1,5 +1,7 @@
 defmodule DonegoodWeb.PageView do
   use DonegoodWeb, :view
+  use Timex
+
   def render("title", _assigns) do
     "Donegood"
   end
@@ -21,4 +23,7 @@ defmodule DonegoodWeb.PageView do
     ] |> Enum.map(&(raw &1))
   end
 
+  def start_dates do
+    Interval.new(from: ~D[2018-11-23], step: [weeks: 1], until: Timex.now)
+  end
 end

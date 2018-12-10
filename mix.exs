@@ -20,7 +20,7 @@ defmodule Donegood.MixProject do
   def application do
     [
       mod: {Donegood.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth]
+      extra_applications: [:logger, :runtime_tools, :ueberauth, :timex]
     ]
   end
 
@@ -50,6 +50,7 @@ defmodule Donegood.MixProject do
       {:ueberauth_google, "~> 0.2"},
       {:oauth, github: "tim/erlang-oauth"},
       {:ecto_enum, "~> 1.0"},
+      {:timex, "~> 3.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

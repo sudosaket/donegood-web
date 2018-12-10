@@ -30,7 +30,7 @@ defmodule DonegoodWeb.DeedController do
         |> redirect(to: Routes.deed_path(conn, :new))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.puts("Failed to created deed with")
+        IO.puts("Failed to create deed with")
         IO.inspect(deed)
         IO.puts("result")
         IO.inspect(changeset)
@@ -60,6 +60,10 @@ defmodule DonegoodWeb.DeedController do
         |> redirect(to: Routes.deed_path(conn, :show, deed))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.puts("Failed to update deed with")
+        IO.inspect(deed)
+        IO.puts("result")
+        IO.inspect(changeset)
         render(conn, "edit.html", deed: deed, changeset: changeset)
     end
   end

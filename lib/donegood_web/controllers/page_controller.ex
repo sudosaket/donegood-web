@@ -1,9 +1,13 @@
 defmodule DonegoodWeb.PageController do
   use DonegoodWeb, :controller
+  alias Donegood.Deeds
 
   def index(conn, _params) do
-    IO.puts("Hello")
-    render(conn, "index.html")
+    scores = Deeds.weekly_leaderboard_scores
+    IO.inspect(scores)
+    render(conn, "index.html", %{
+      weekly_leaderboard_scores: scores
+      })
   end
 
   def signin(conn, _params) do

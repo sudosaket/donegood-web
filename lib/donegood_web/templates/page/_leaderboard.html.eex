@@ -1,0 +1,20 @@
+<h2>Leaderboard</h2>
+
+<table>
+  <tr>
+    <th>Period starting</th>
+    <%= for user <- @users do %>
+      <th><%= user.name %></th>
+    <% end %>
+  </tr>
+<%= for start_date <- @start_dates do %>
+  <tr>
+    <th><%= Timex.format!(start_date, "{relative}", :relative) %></th>
+    <%= for user <- @users do %>
+      <td title="<%=Donegood.Deeds.summary_for_period(start_date,user)%>" style="cursor: crosshair">
+        <%= Donegood.Deeds.score_for_period(start_date, user) %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
