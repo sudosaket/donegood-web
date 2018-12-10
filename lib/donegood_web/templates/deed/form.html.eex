@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-  <%= label f, :user, "Who?" %>
+  <%= label f, :user_id, "Who?" %>
   <%= select f, :user_id, users_select_list %>
   <%= error_tag f, :user_id %>
 
@@ -28,8 +28,9 @@
   <%= label f, :repeat_value, "Every" %>
   <%= number_input f, :repeat_value %>
   <%= error_tag f, :repeat_value %>
-  <%= select f, :repeat_unit, RepetitionUnitEnum.__enum_map__() %>
 
+  <%= select f, :repeat_unit, RepetitionUnitEnum.__enum_map__() %>
+  <%= error_tag f, :repeat_unit %>
 
   <%= error_tag f, :created_by_user_id %>
   <div>
