@@ -16,7 +16,6 @@
         <a href="/">
           <span class="logo"></span> Donegood
         </a>
-        <%= render "_current_user.html", conn: @conn %>
       </header>
       </section>
     </header>

@@ -20,7 +20,7 @@ defmodule Donegood.Deeds.Deed do
   @doc false
   def changeset(deed, attrs) do
     deed
-    |> cast(attrs, [:title, :when, :score, :user_id, :created_by_user_id])
+    |> cast(attrs, [:title, :when, :score, :user_id, :created_by_user_id, :repeats, :repeat_value, :repeat_unit])
     |> validate_required([:title, :when, :score, :user_id, :created_by_user_id])
   end
 end

@@ -33,3 +33,11 @@ td ul li {
 .score-button label {
   display: inline;
 }
+
+input.inline {
+  display: inline;
+  width: inherit;
+}
+form p {
+  margin-top: 10px;
+}

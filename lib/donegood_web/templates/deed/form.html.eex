@@ -25,18 +25,11 @@
     </span>
   <% end %>
   <%= error_tag f, :score %>
-
-  <%= label f, :repeats %>
-  <%= checkbox f, :repeats %>
-  <%= error_tag f, :repeats %>
-
-  <%= label f, :repeat_value, "Every" %>
-  <%= number_input f, :repeat_value %>
-  <%= error_tag f, :repeat_value %>
-
-  <%= select f, :repeat_unit, RepetitionUnitEnum.__enum_map__() %>
-  <%= error_tag f, :repeat_unit %>
-
+  <p>
+    <%= label f, :repeats, "Repeats every week?", style: "display: inline;" %>
+    <%= checkbox f, :repeats %>
+    <%= error_tag f, :repeats %>
+  </p>
   <div>
     <%= submit "Save" %>
   </div>
