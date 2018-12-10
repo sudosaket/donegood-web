@@ -1,5 +1,5 @@
 <h1>Listing Deeds</h1>
-
+<span><%= link "New Deed", to: Routes.deed_path(@conn, :new) %></span>
 <table>
   <thead>
     <tr>
