@@ -21,8 +21,10 @@ defmodule DonegoodWeb.DeedController do
 
   def create(conn, %{"deed" => deed_params}) do
     user = conn.assigns[:current_user]
-
-    case Deeds.create_deed(deed_params |> Map.merge(%{"created_by_user" => user})) do
+    deed = deed_params |> Map.merge(%{"created_by_user_id" => user.id})
+    IO.puts("Creating")
+    IO.inspect(deed)
+    case Deeds.create_deed(deed) do
       {:ok, _deed} ->
         conn
         |> put_flash(:info, "Deed created successfully. Add another?")
