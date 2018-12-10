@@ -25,5 +25,6 @@ defmodule DonegoodWeb.PageView do
 
   def start_dates do
     Interval.new(from: ~D[2018-11-23], step: [weeks: 1], until: Timex.now)
+    |> Enum.reverse
   end
 end

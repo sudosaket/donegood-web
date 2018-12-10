@@ -8,11 +8,17 @@
     <% end %>
   </tr>
 <%= for start_date <- @start_dates do %>
+  <% weeks = Timex.diff(Timex.now, start_date, :weeks) %>
   <tr>
-    <th><%= Timex.format!(start_date, "{relative}", :relative) %></th>
+    <th><%= if (weeks == 0), do: "This week", else: if weeks == 1, do: "Last week", else: Kernel.inspect(weeks) <> " weeks ago" %></th>
     <%= for user <- @users do %>
-      <td title="<%=Donegood.Deeds.summary_for_period(start_date,user)%>" style="cursor: crosshair">
-        <%= Donegood.Deeds.score_for_period(start_date, user) %>
+      <td>
+        <h3><%= Donegood.Deeds.score_for_period(start_date, user) %></h3>
+        <ul>
+          <%= for deed <- Donegood.Deeds.deeds_for_period(start_date,user) do %>
+            <li><strong><%= link deed.score, to: Routes.deed_path(@conn, :edit, deed) %></strong>: <%= deed.title%></li>
+          <% end %>
+        </ul>
       </td>
     <% end %>
   </tr>
