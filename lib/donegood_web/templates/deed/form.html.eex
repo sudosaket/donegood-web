@@ -32,7 +32,6 @@
   <%= select f, :repeat_unit, RepetitionUnitEnum.__enum_map__() %>
   <%= error_tag f, :repeat_unit %>
 
-  <%= error_tag f, :created_by_user_id %>
   <div>
     <%= submit "Save" %>
   </div>

@@ -22,8 +22,7 @@ defmodule DonegoodWeb.DeedController do
   def create(conn, %{"deed" => deed_params}) do
     user = conn.assigns[:current_user]
     deed = deed_params |> Map.merge(%{"created_by_user_id" => user.id})
-    IO.puts("Creating")
-    IO.inspect(deed)
+
     case Deeds.create_deed(deed) do
       {:ok, _deed} ->
         conn
@@ -31,6 +30,10 @@ defmodule DonegoodWeb.DeedController do
         |> redirect(to: Routes.deed_path(conn, :new))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.puts("Failed to created deed with")
+        IO.inspect(deed)
+        IO.puts("result")
+        IO.inspect(changeset)
         render(conn, "new.html", changeset: changeset)
     end
   end
