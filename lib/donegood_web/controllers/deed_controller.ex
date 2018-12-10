@@ -22,7 +22,7 @@ defmodule DonegoodWeb.DeedController do
   def create(conn, %{"deed" => deed_params}) do
     user = conn.assigns[:current_user]
 
-    case Deeds.create_deed(deed_params |> Map.merge(%{"user_id" => user.id})) do
+    case Deeds.create_deed(deed_params |> Map.merge(%{"created_by_user_id" => user.id})) do
       {:ok, deed} ->
         conn
         |> put_flash(:info, "Deed created successfully. Add another?")
@@ -40,14 +40,14 @@ defmodule DonegoodWeb.DeedController do
 
   def edit(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
-    ensure_owned_by_current_user!(conn,deed)
+    ensure_editable_by_current_user!(conn,deed)
     changeset = Deeds.change_deed(deed)
     render(conn, "edit.html", deed: deed, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "deed" => deed_params}) do
     deed = Deeds.get_deed!(id)
-    ensure_owned_by_current_user!(conn,deed)
+    ensure_editable_by_current_user!(conn,deed)
     case Deeds.update_deed(deed, deed_params) do
       {:ok, deed} ->
         conn
@@ -61,7 +61,7 @@ defmodule DonegoodWeb.DeedController do
 
   def delete(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
-    ensure_owned_by_current_user!(conn,deed)
+    ensure_editable_by_current_user!(conn,deed)
     {:ok, _deed} = Deeds.delete_deed(deed)
 
     conn
@@ -70,8 +70,9 @@ defmodule DonegoodWeb.DeedController do
   end
 
 
-  def ensure_owned_by_current_user!(conn, deed) do
-    if (conn.assigns.current_user.id != deed.user_id) do
+  def ensure_editable_by_current_user!(conn, deed) do
+    current_user_id = conn.assigns.current_user.id
+    if (current_user_id != deed.user_id and current_user_id != deed.created_by_user_id) do
       conn
       |> Phoenix.Controller.put_flash(:error, "Not your deed")
       |> halt()

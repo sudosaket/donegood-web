@@ -18,7 +18,7 @@ defmodule Donegood.Deeds do
 
   """
   def list_deeds do
-    Repo.all(Deed) |> Repo.preload(:user)
+    Repo.all(Deed) |> Repo.preload(:user, :created_by_user)
   end
 
   @doc """

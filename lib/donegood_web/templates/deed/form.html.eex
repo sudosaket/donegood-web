@@ -5,6 +5,9 @@
     </div>
   <% end %>
 
+  <%= label f, :user, "Who?" %>
+  <%= select f, :user_id, users_select_list %>
+
   <%= label f, :title %>
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
@@ -25,7 +28,7 @@
   <%= number_input f, :repeat_value %>
   <%= error_tag f, :repeat_value %>
   <%= select f, :repeat_unit, RepetitionUnitEnum.__enum_map__() %>
-  
+
   <div>
     <%= submit "Save" %>
   </div>
