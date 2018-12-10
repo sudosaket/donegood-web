@@ -1,6 +1,7 @@
 <h2>Leaderboard</h2>
 <a href="/deeds">See everything</a>
-
+|
+<a href="/deeds/new">Add new</a>
 <table>
   <tr>
     <th>Period starting</th>
