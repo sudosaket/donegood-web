@@ -25,8 +25,8 @@ defmodule DonegoodWeb.DeedController do
     case Deeds.create_deed(deed_params |> Map.merge(%{"user_id" => user.id})) do
       {:ok, deed} ->
         conn
-        |> put_flash(:info, "Deed created successfully.")
-        |> redirect(to: Routes.deed_path(conn, :show, deed))
+        |> put_flash(:info, "Deed created successfully. Add another?")
+        |> redirect(to: Routes.deed_path(conn, :new))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
