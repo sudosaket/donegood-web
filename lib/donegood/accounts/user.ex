@@ -13,6 +13,7 @@ defmodule Donegood.Accounts.User do
     field :twitter_id, :string
 
     has_many :deeds, Donegood.Deeds.Deed
+    has_many :created_deeds, Donegood.Deeds.Deed, foreign_key: :created_by_user_id
 
     timestamps()
   end
