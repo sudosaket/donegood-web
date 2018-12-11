@@ -6,7 +6,7 @@ defmodule Donegood.DeedsTest do
   describe "deeds" do
     alias Donegood.Deeds.Deed
 
-    @valid_attrs %{score: 42, title: "some title", when: ~D[2010-04-17]}
+    @valid_attrs %{score: 42, title: "some title", when: ~D[2010-04-17], user_id: 1}
     @update_attrs %{score: 43, title: "some updated title", when: ~D[2011-05-18]}
     @invalid_attrs %{score: nil, title: nil, when: nil}
 

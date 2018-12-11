@@ -1,13 +1,12 @@
 defmodule Donegood.UserFromAuth do
   alias Donegood.Accounts.User
   alias Donegood.Repo
-  alias Ueberauth.Auth
 
   def find_or_create(auth) do
     case auth_and_validate(auth) do
       nil -> create_user_from_auth(auth)
       user -> {:ok, user}
-      {:error, reason} -> {:error, reason}
+      # {:error, reason} -> {:error, reason}
     end
   end
 

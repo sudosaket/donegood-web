@@ -4,7 +4,6 @@ defmodule DonegoodWeb.PageController do
 
   def index(conn, _params) do
     scores = Deeds.weekly_leaderboard_scores
-    IO.inspect(scores)
     render(conn, "index.html", %{
       weekly_leaderboard_scores: scores
       })

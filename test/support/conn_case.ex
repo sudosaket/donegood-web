@@ -21,6 +21,8 @@ defmodule DonegoodWeb.ConnCase do
       use Phoenix.ConnTest
       alias DonegoodWeb.Router.Helpers, as: Routes
 
+      import DonegoodWeb.ConnCase, only: [with_user: 2, with_valid_user: 1]
+
       # The default endpoint for testing
       @endpoint DonegoodWeb.Endpoint
     end
@@ -34,5 +36,29 @@ defmodule DonegoodWeb.ConnCase do
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
+  end
+
+  def with_user(conn, user) do
+    import Donegood.Auth.Guardian
+    import Plug.Conn
+
+    {:ok, token, _} = encode_and_sign(user, %{}, token_type: :access)
+    conn =
+      conn
+      |> put_req_header("authorization", "bearer: " <> token)
+      |> Map.put(:assigns, %{current_user: user})
+
+    {conn, user}
+  end
+
+  def with_valid_user(conn) do
+    user =
+      %Donegood.Accounts.User{
+        id: 1,
+        name: "Michael Forrest"
+      }
+      |> Donegood.Repo.insert!
+
+    with_user(conn, user)
   end
 end

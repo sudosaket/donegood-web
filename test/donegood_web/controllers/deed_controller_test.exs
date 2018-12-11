@@ -3,9 +3,14 @@ defmodule DonegoodWeb.DeedControllerTest do
 
   alias Donegood.Deeds
 
-  @create_attrs %{score: 42, title: "some title", when: ~D[2010-04-17]}
+  @create_attrs %{score: 42, title: "some title", when: ~D[2010-04-17], user_id: 1, created_by_user_id: 1}
   @update_attrs %{score: 43, title: "some updated title", when: ~D[2011-05-18]}
   @invalid_attrs %{score: nil, title: nil, when: nil}
+
+  setup do
+    {conn, _user} = build_conn() |> with_valid_user()
+    {:ok, conn: conn}
+  end
 
   def fixture(:deed) do
     {:ok, deed} = Deeds.create_deed(@create_attrs)
@@ -57,7 +62,7 @@ defmodule DonegoodWeb.DeedControllerTest do
 
     test "redirects when data is valid", %{conn: conn, deed: deed} do
       conn = put(conn, Routes.deed_path(conn, :update, deed), deed: @update_attrs)
-      assert redirected_to(conn) == Routes.deed_path(conn, :show, deed)
+      assert redirected_to(conn) == Routes.deed_path(conn, :new)
 
       conn = get(conn, Routes.deed_path(conn, :show, deed))
       assert html_response(conn, 200) =~ "some updated title"

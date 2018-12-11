@@ -51,6 +51,7 @@ defmodule Donegood.MixProject do
       {:oauth, github: "tim/erlang-oauth"},
       {:ecto_enum, "~> 1.0"},
       {:timex, "~> 3.0"},
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

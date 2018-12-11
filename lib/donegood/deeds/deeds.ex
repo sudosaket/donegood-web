@@ -37,8 +37,17 @@ defmodule Donegood.Deeds do
     query =
       from deed in Deed,
         where: fragment(
-          "? = ? AND ? BETWEEN ? AND ?",
-          deed.user_id, ^user.id, deed.when, ^NaiveDateTime.to_date(start_date), ^NaiveDateTime.to_date(Timex.shift(start_date, weeks: 1))
+          "? = ? AND ((? >= ? AND ? < ?) OR (? = ? AND ? < ?))",
+          deed.user_id,
+          ^user.id,
+          deed.when,
+          ^NaiveDateTime.to_date(start_date),
+          deed.when,
+          ^NaiveDateTime.to_date(Timex.shift(start_date, weeks: 1)),
+          deed.repeats,
+          ^true,
+          deed.when,
+          ^NaiveDateTime.to_date(start_date)
         )
     Repo.all(query)
   end

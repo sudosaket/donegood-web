@@ -2,7 +2,6 @@ defmodule DonegoodWeb.UserController do
   use DonegoodWeb, :controller
 
   alias Donegood.Accounts
-  alias Donegood.Accounts.User
 
   def index(conn, _params) do
     users = Accounts.list_users()

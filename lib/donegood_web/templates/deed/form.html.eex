@@ -6,7 +6,7 @@
   <% end %>
 
   <%= label f, :user_id, "Who?" %>
-  <%= select f, :user_id, users_select_list %>
+  <%= select f, :user_id, users_select_list() %>
   <%= error_tag f, :user_id %>
 
   <%= label f, :title %>
