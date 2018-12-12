@@ -1,9 +1,10 @@
-const path = require('path');
-const glob = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const glob = require("glob");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = (env, options) => ({
   optimization: {
@@ -13,29 +14,36 @@ module.exports = (env, options) => ({
     ]
   },
   entry: {
-      './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js'))
+    "./js/app.js": ["./js/app.js"].concat(glob.sync("./vendor/**/*.js"))
   },
   output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, '../priv/static/js')
+    filename: "app.js",
+    path: path.resolve(__dirname, "../priv/static/js")
+  },
+  resolve: {
+    modules: ["node_modules", "assets/js"],
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: [".ts", ".tsx", ".js", ".json"]
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$|\.ts?$/,
+        use: "awesome-typescript-loader"
+      },
+      {
+        test: /\.jsx$|\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        use: "babel-loader"
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
       }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
+    new MiniCssExtractPlugin({ filename: "../css/app.css" }),
+    new CopyWebpackPlugin([{ from: "static/", to: "../" }])
   ]
 });

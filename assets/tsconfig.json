@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "target": "es6",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "skipDefaultLibCheck": true,
+    "lib": ["es2015", "dom"],
+    "types": ["webpack-env"]
+  }
+}
