@@ -20,7 +20,7 @@ defmodule Donegood.MixProject do
   def application do
     [
       mod: {Donegood.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth, :timex]
+      extra_applications: [:bamboo,:logger, :runtime_tools, :ueberauth, :timex]
     ]
   end
 
@@ -52,7 +52,7 @@ defmodule Donegood.MixProject do
       {:ecto_enum, "~> 1.0"},
       {:timex, "~> 3.0"},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
-      {:mailgun, git: "https://github.com/vassiliy/mailgun"},
+      {:bamboo, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
