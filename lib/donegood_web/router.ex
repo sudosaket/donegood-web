@@ -35,7 +35,9 @@ defmodule DonegoodWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
-    resources "/deeds", DeedController
+    resources "/deeds", DeedController do
+      resources "/comments", CommentController
+    end
   end
 
   # Other scopes may use custom stacks.

@@ -8,6 +8,8 @@ defmodule Donegood.Deeds do
 
   alias Donegood.Deeds.Deed
 
+  alias Donegood.Deeds.ScoreChange
+
   @doc """
   Returns the list of deeds.
 
@@ -77,7 +79,7 @@ defmodule Donegood.Deeds do
       ** (Ecto.NoResultsError)
 
   """
-  def get_deed!(id), do: Repo.get!(Deed, id)
+  def get_deed!(id), do: Deed |> Repo.get!(id) |> Repo.preload([:user, [score_changes: :user]])
 
   @doc """
   Creates a deed.
@@ -109,10 +111,23 @@ defmodule Donegood.Deeds do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_deed(%Deed{} = deed, attrs) do
+  def update_deed(%Deed{} = deed, attrs, current_user) do
+    if deed.score != attrs["score"] do
+      IO.inspect(changing_score: [current_user, attrs, deed])
+      %ScoreChange{}
+      |> ScoreChange.changeset(%{
+        "from" => deed.score,
+        "to" => attrs["score"],
+        "user_id" => current_user.id,
+        "deed_id" => deed.id
+        })
+      |> Repo.insert!()
+    end
+
     deed
     |> Deed.changeset(attrs)
     |> Repo.update()
+
   end
 
   @doc """
@@ -146,4 +161,55 @@ defmodule Donegood.Deeds do
 
 
 
+
+  alias Donegood.Deeds.ScoreChange
+
+
+  @doc """
+  Creates a score_change.
+
+  ## Examples
+
+      iex> create_score_change(%{field: value})
+      {:ok, %ScoreChange{}}
+
+      iex> create_score_change(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_score_change(attrs \\ %{}) do
+    %ScoreChange{}
+    |> ScoreChange.changeset(attrs)
+    |> Repo.insert()
+  end
+
+
+  @doc """
+  Deletes a ScoreChange.
+
+  ## Examples
+
+      iex> delete_score_change(score_change)
+      {:ok, %ScoreChange{}}
+
+      iex> delete_score_change(score_change)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_score_change(%ScoreChange{} = score_change) do
+    Repo.delete(score_change)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking score_change changes.
+
+  ## Examples
+
+      iex> change_score_change(score_change)
+      %Ecto.Changeset{source: %ScoreChange{}}
+
+  """
+  def change_score_change(%ScoreChange{} = score_change) do
+    ScoreChange.changeset(score_change, %{})
+  end
 end

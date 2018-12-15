@@ -1,23 +1,37 @@
-<h1>Show Deed</h1>
+<strong class="score"><%= @deed.score %></strong>
+<h1><%= @deed.title %></h1>
 
-<ul>
+<p>
+<%= @deed.user.name %> | <%= @deed.when %>
+| <span><%= link "Edit", to: Routes.deed_path(@conn, :edit, @deed) %></span>
+</p>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @deed.title %>
-  </li>
 
-  <li>
-    <strong>When:</strong>
-    <%= @deed.when %>
-  </li>
 
-  <li>
-    <strong>Score:</strong>
-    <%= @deed.score %>
-  </li>
 
-</ul>
+<section class="discussion">
+<%= for item <- @discussion do %>
+  <%= case item do %>
+  <%= {:comment, comment} -> %>
+  <div class="comment">
+    <strong><%= comment.user.name %></strong>
+    <%= comment.body %> (<%= comment.inserted_at %> )
+  </div>
+  <%= {:score_change, score_change} -> %>
+    <div class="score-change">
+      <strong>Score changed from
+      <%= score_change.from %> to <%= score_change.to %>
+      </strong>
+      by <%= score_change.user.name %>
+      (<%= score_change.inserted_at %>)
+    </div>
+  <% end %>
+<% end %>
 
-<span><%= link "Edit", to: Routes.deed_path(@conn, :edit, @deed) %></span>
-<span><%= link "Back", to: Routes.deed_path(@conn, :index) %></span>
+<%= render "comment_form.html",
+            assigns
+            |> Map.put(:action, Routes.deed_comment_path(@conn, :create, @deed))
+            |> Map.put(:changeset, @new_comment)
+             %>
+
+</section>

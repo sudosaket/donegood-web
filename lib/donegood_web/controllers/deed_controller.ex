@@ -3,6 +3,8 @@ defmodule DonegoodWeb.DeedController do
 
   alias Donegood.Deeds
   alias Donegood.Deeds.Deed
+  alias Donegood.Comments
+  alias Donegood.Comments.Comment
 
   plug Guardian.Plug.EnsureAuthenticated
 
@@ -40,7 +42,15 @@ defmodule DonegoodWeb.DeedController do
 
   def show(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
-    render(conn, "show.html", deed: deed)
+    new_comment = Comments.change_comment(%Comment{})
+    comments = Comments.list_comments(deed)
+
+    discussion = (
+       Enum.map(comments, fn comment -> {:comment, comment} end )
+        ++ Enum.map(deed.score_changes, fn score_change -> {:score_change, score_change} end )
+      )
+      |> Enum.sort_by(fn {_, item} -> item.inserted_at end )
+    render(conn, "show.html", deed: deed, new_comment: new_comment, discussion: discussion)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -51,9 +61,9 @@ defmodule DonegoodWeb.DeedController do
 
   def update(conn, %{"id" => id, "deed" => deed_params}) do
     deed = Deeds.get_deed!(id)
-    IO.puts("updatig")
+
     if editable_by_current_user?(conn, deed) do
-      case Deeds.update_deed(deed, deed_params) do
+      case Deeds.update_deed(deed, deed_params, conn.assigns.current_user) do
         {:ok, deed} ->
           conn
           |> put_flash(:info, "Deed updated successfully.")

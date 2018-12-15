@@ -65,4 +65,65 @@ defmodule Donegood.DeedsTest do
       assert %Ecto.Changeset{} = Deeds.change_deed(deed)
     end
   end
+
+  describe "score_changes" do
+    alias Donegood.Deeds.ScoreChange
+
+    @valid_attrs %{from: 42, to: 42}
+    @update_attrs %{from: 43, to: 43}
+    @invalid_attrs %{from: nil, to: nil}
+
+    def score_change_fixture(attrs \\ %{}) do
+      {:ok, score_change} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Deeds.create_score_change()
+
+      score_change
+    end
+
+    test "list_score_changes/0 returns all score_changes" do
+      score_change = score_change_fixture()
+      assert Deeds.list_score_changes() == [score_change]
+    end
+
+    test "get_score_change!/1 returns the score_change with given id" do
+      score_change = score_change_fixture()
+      assert Deeds.get_score_change!(score_change.id) == score_change
+    end
+
+    test "create_score_change/1 with valid data creates a score_change" do
+      assert {:ok, %ScoreChange{} = score_change} = Deeds.create_score_change(@valid_attrs)
+      assert score_change.from == 42
+      assert score_change.to == 42
+    end
+
+    test "create_score_change/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Deeds.create_score_change(@invalid_attrs)
+    end
+
+    test "update_score_change/2 with valid data updates the score_change" do
+      score_change = score_change_fixture()
+      assert {:ok, %ScoreChange{} = score_change} = Deeds.update_score_change(score_change, @update_attrs)
+      assert score_change.from == 43
+      assert score_change.to == 43
+    end
+
+    test "update_score_change/2 with invalid data returns error changeset" do
+      score_change = score_change_fixture()
+      assert {:error, %Ecto.Changeset{}} = Deeds.update_score_change(score_change, @invalid_attrs)
+      assert score_change == Deeds.get_score_change!(score_change.id)
+    end
+
+    test "delete_score_change/1 deletes the score_change" do
+      score_change = score_change_fixture()
+      assert {:ok, %ScoreChange{}} = Deeds.delete_score_change(score_change)
+      assert_raise Ecto.NoResultsError, fn -> Deeds.get_score_change!(score_change.id) end
+    end
+
+    test "change_score_change/1 returns a score_change changeset" do
+      score_change = score_change_fixture()
+      assert %Ecto.Changeset{} = Deeds.change_score_change(score_change)
+    end
+  end
 end
