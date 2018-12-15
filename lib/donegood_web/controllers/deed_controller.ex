@@ -45,46 +45,51 @@ defmodule DonegoodWeb.DeedController do
 
   def edit(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
-    ensure_editable_by_current_user!(conn,deed)
     changeset = Deeds.change_deed(deed)
     render(conn, "edit.html", deed: deed, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "deed" => deed_params}) do
     deed = Deeds.get_deed!(id)
-    ensure_editable_by_current_user!(conn,deed)
-    case Deeds.update_deed(deed, deed_params) do
-      {:ok, deed} ->
-        conn
-        |> put_flash(:info, "Deed updated successfully.")
-        |> redirect(to: Routes.deed_path(conn, :show, deed))
+    IO.puts("updatig")
+    if editable_by_current_user?(conn, deed) do
+      case Deeds.update_deed(deed, deed_params) do
+        {:ok, deed} ->
+          conn
+          |> put_flash(:info, "Deed updated successfully.")
+          |> redirect(to: Routes.deed_path(conn, :show, deed))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        IO.puts("Failed to update deed with")
-        IO.inspect(deed)
-        IO.puts("result")
-        IO.inspect(changeset)
-        render(conn, "edit.html", deed: deed, changeset: changeset)
+        {:error, %Ecto.Changeset{} = changeset} ->
+          IO.puts("Failed to update deed with")
+          IO.inspect(deed)
+          IO.puts("result")
+          IO.inspect(changeset)
+          render(conn, "edit.html", deed: deed, changeset: changeset)
+      end
+    else
+      conn |> put_flash(:error, "You are not allowed to edit this") |> redirect(to: Routes.deed_path(conn, :show, deed))
     end
+
   end
 
   def delete(conn, %{"id" => id}) do
     deed = Deeds.get_deed!(id)
-    ensure_editable_by_current_user!(conn,deed)
-    {:ok, _deed} = Deeds.delete_deed(deed)
+    if editable_by_current_user?(conn,deed) do
+      {:ok, _deed} = Deeds.delete_deed(deed)
+      conn
+      |> put_flash(:info, "Deed deleted successfully.")
+      |> redirect(to: Routes.deed_path(conn, :index))
+    else
+      conn
+      |> put_flash(:error, "You are not allowed to delete this")
+      |> redirect(to: Routes.deed_path(conn, :index))
+    end
 
-    conn
-    |> put_flash(:info, "Deed deleted successfully.")
-    |> redirect(to: Routes.deed_path(conn, :index))
   end
 
 
-  def ensure_editable_by_current_user!(conn, deed) do
+  def editable_by_current_user?(conn, deed) do
     current_user_id = conn.assigns.current_user.id
-    if (current_user_id != deed.user_id and current_user_id != deed.created_by_user_id) do
-      conn
-      |> Phoenix.Controller.put_flash(:error, "Not your deed")
-      |> halt()
-    end
+    current_user_id == deed.user_id or current_user_id == deed.created_by_user_id
   end
 end

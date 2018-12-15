@@ -38,15 +38,20 @@ defmodule DonegoodWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
+    if user.id == conn.assigns.current_user.id do
+      case Accounts.update_user(user, user_params) do
+        {:ok, user} ->
+          conn
+          |> put_flash(:info, "User updated successfully.")
+          |> redirect(to: Routes.user_path(conn, :show, user))
 
-    case Accounts.update_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "edit.html", user: user, changeset: changeset)
+      end
+    else
+      conn
+      |> put_flash(:error, "You can't update this user")
+      |> redirect(to: "/")
     end
   end
 

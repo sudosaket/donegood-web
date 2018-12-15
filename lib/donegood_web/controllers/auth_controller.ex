@@ -1,5 +1,6 @@
 defmodule DonegoodWeb.AuthController do
   use DonegoodWeb, :controller
+  import Phoenix.HTML.Link
   alias Donegood.UserFromAuth
   alias Donegood.Auth.Guardian
   plug Ueberauth
@@ -16,6 +17,7 @@ defmodule DonegoodWeb.AuthController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Signed in as #{user.name}")
+        |> prompt_if_email_missing(user)
         |> Guardian.Plug.sign_in(user)
         |> redirect(to: "/")
       {:error, reason} ->
@@ -31,5 +33,16 @@ defmodule DonegoodWeb.AuthController do
     |> put_flash(:info, "Logged out")
     |> redirect(to: "/auth/sign-in")
 
+  end
+
+  def prompt_if_email_missing(conn, user) do
+    if is_nil(user.email) do
+      put_flash(conn, :error, [
+        "Please ",
+        link("provide your email address", to: Routes.user_path(conn, :edit, user))
+        ])
+    else
+      conn
+    end
   end
 end

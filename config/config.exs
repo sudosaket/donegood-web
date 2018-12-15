@@ -17,6 +17,9 @@ config :donegood, DonegoodWeb.Endpoint,
   render_errors: [view: DonegoodWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Donegood.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :donegood, mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+                mailgun_key: System.get_env("MAILGUN_KEY")
+
 config :ueberauth, Ueberauth,
   providers: [
     facebook: { Ueberauth.Strategy.Facebook, [] },

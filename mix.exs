@@ -52,6 +52,7 @@ defmodule Donegood.MixProject do
       {:ecto_enum, "~> 1.0"},
       {:timex, "~> 3.0"},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
+      {:mailgun, git: "https://github.com/vassiliy/mailgun"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

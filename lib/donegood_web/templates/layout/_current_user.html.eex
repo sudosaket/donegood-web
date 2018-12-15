@@ -1,4 +1,3 @@
-
 <%= if current_user_exists(@conn) do %>
   <p>
     <%= current_user(@conn).name %>
