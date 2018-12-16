@@ -21,7 +21,7 @@
             <li>
               <strong><%= deed.score %></strong>: <%= deed.title%>
               <%= if deed.repeats, do: "♺", else: "" %>
-              <%= link( inspect(Enum.count(deed.comments)) <> " comment/s", to:  Routes.deed_path(@conn, :show, deed)) %>
+              <%= link( inspect(Enum.count(deed.comments)) <> " comment" <> if(Enum.count(deed.comments) == 1, do: "", else: "s"), to:  Routes.deed_path(@conn, :show, deed)) %>
             </li>
           <% end %>
         </ul>
