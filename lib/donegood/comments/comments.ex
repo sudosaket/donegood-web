@@ -18,7 +18,7 @@ defmodule Donegood.Comments do
 
   """
   def list_comments(deed) do
-    Repo.all(Comment, deed: deed) |> Repo.preload(:user)
+    deed.comments |> Repo.preload(:user)
   end
 
   @doc """

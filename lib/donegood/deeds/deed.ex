@@ -15,6 +15,7 @@ defmodule Donegood.Deeds.Deed do
     belongs_to :user, Donegood.Accounts.User
     belongs_to :created_by_user, Donegood.Accounts.User
 
+    has_many :comments, Donegood.Comments.Comment
     has_many :score_changes, Donegood.Deeds.ScoreChange
 
     timestamps()

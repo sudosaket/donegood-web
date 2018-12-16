@@ -79,7 +79,7 @@ defmodule Donegood.Deeds do
       ** (Ecto.NoResultsError)
 
   """
-  def get_deed!(id), do: Deed |> Repo.get!(id) |> Repo.preload([:user, [score_changes: :user]])
+  def get_deed!(id), do: Deed |> Repo.get!(id) |> Repo.preload([:user, :comments, [score_changes: :user]])
 
   @doc """
   Creates a deed.

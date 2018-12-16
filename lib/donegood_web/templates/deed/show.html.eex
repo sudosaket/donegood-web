@@ -15,7 +15,7 @@
   <%= {:comment, comment} -> %>
   <div class="comment">
     <strong><%= comment.user.name %></strong>
-    <%= comment.body %> (<%= comment.inserted_at %> )
+    <%= comment.body %> (<%= comment.inserted_at %> ) (deed <%= comment.deed_id %>)
   </div>
   <%= {:score_change, score_change} -> %>
     <div class="score-change">

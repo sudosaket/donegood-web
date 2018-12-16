@@ -16,7 +16,8 @@ defmodule DonegoodWeb.DeedController do
   def new(conn, _params) do
     changeset = Deed.changeset(%Deed{},%{
       when: Date.utc_today,
-      repeats: false
+      repeats: false,
+      user_id: conn.assigns.current_user.id
     })
     render(conn, "new.html", changeset: changeset)
   end
