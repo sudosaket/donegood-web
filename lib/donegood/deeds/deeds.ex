@@ -20,7 +20,7 @@ defmodule Donegood.Deeds do
 
   """
   def list_deeds do
-    Repo.all(Deed) |> Repo.preload(:user)
+    Repo.all(Deed) |> Repo.preload([:user, :comments])
   end
 
 
@@ -51,7 +51,7 @@ defmodule Donegood.Deeds do
           deed.when,
           ^NaiveDateTime.to_date(start_date)
         )
-    Repo.all(query)
+    Repo.all(query) |> Repo.preload(:comments)
   end
 
   def score_for_period(start_date, user) do

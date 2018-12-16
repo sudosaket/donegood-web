@@ -19,8 +19,9 @@
         <ul>
           <%= for deed <- Donegood.Deeds.deeds_for_period(start_date,user) do %>
             <li>
-              <strong><%= link deed.score, to: Routes.deed_path(@conn, :show, deed) %></strong>: <%= deed.title%>
+              <strong><%= deed.score %></strong>: <%= deed.title%>
               <%= if deed.repeats, do: "♺", else: "" %>
+              <%= link( inspect(Enum.count(deed.comments)) <> " comment/s", to:  Routes.deed_path(@conn, :show, deed)) %>
             </li>
           <% end %>
         </ul>
