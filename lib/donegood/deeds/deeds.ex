@@ -112,7 +112,7 @@ defmodule Donegood.Deeds do
 
   """
   def update_deed(%Deed{} = deed, attrs, current_user) do
-    if deed.score != attrs["score"] do
+    if inspect(deed.score) != attrs["score"] do
       IO.inspect(changing_score: [current_user, attrs, deed])
       %ScoreChange{}
       |> ScoreChange.changeset(%{
