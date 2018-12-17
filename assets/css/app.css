@@ -1,6 +1,10 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
+h2 span {
+  float: right;
+  font-size: 60%;
+}
 footer {
   position: fixed;
   bottom: 10px;
@@ -41,4 +45,7 @@ input.inline {
 }
 form p {
   margin-top: 10px;
+}
+.pull-right {
+  float: right;
 }

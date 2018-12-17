@@ -6,4 +6,3 @@
   start_dates: start_dates()
    %>
   <%# render "_overview.html", conn: @conn, current_user: @current_user %>
-<a href="/deeds">Everything</a>

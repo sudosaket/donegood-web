@@ -1,7 +1,11 @@
-<h2>Leaderboard</h2>
-<a href="/deeds">See everything</a>
-|
-<a href="/deeds/new">Add new</a>
+<h2>
+  Leaderboard
+  <span class="pull-right">
+    <a href="/deeds/new" class="button">
+      ＋Add
+    </a>
+  </span>
+</h2>
 <table>
   <tr>
     <th>Period starting</th>
