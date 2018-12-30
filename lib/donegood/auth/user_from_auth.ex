@@ -1,5 +1,6 @@
 defmodule Donegood.UserFromAuth do
   alias Donegood.Accounts.User
+  alias Donegood.Accounts
   alias Donegood.Repo
 
   def find_or_create(auth) do
@@ -62,7 +63,13 @@ defmodule Donegood.UserFromAuth do
 
   defp create_user_from_auth(%{provider: :google} = auth) do
     IO.inspect auth
-    User.changeset(%User{}, %{name: auth.info.name, google_id: auth.uid, google_token: auth.credentials.token})
+    User.changeset(%User{}, %{
+      name: auth.info.name,
+      email: auth.info.email,
+      picture: auth.info.picture,
+      google_id: auth.uid,
+      google_token: auth.credentials.token
+      })
     |> Repo.insert
   end
 
@@ -77,8 +84,23 @@ defmodule Donegood.UserFromAuth do
   end
 
   defp auth_and_validate(%{provider: :google} = auth) do
-    Repo.get_by(User, google_id: auth.uid)
+    case Repo.get_by(User, google_id: auth.uid) do
+      nil -> nil
+      user -> if user.picture == nil || user.email == nil do
+        update_user_from_auth(auth, user)
+      else
+        user
+      end
+    end
   end
 
   defp auth_and_validate(_auth), do: {:error, "Unsupported provider"}
+
+  defp update_user_from_auth(%{provider: :google} = auth, user) do
+    Accounts.update_user(user, %{
+      email: auth.info.email,
+      picture: auth.info.image # eesh sorry
+      })
+    user
+  end
 end

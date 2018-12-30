@@ -11,6 +11,7 @@ defmodule Donegood.Accounts.User do
     field :google_token, :string
     field :name, :string
     field :twitter_id, :string
+    field :picture, :string
 
     has_many :deeds, Donegood.Deeds.Deed
     has_many :created_deeds, Donegood.Deeds.Deed, foreign_key: :created_by_user_id
@@ -21,7 +22,7 @@ defmodule Donegood.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :facebook_id, :facebook_token, :google_id, :google_token, :twitter_id])
+    |> cast(attrs, [:name, :email, :facebook_id, :facebook_token, :google_id, :google_token, :twitter_id, :picture])
     |> validate_required([:name])
   end
 end

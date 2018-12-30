@@ -1,4 +1,4 @@
 <h1>Welcome</h1>
 <p>
-  <%= link "Sign in with Google", to: "/auth/google", class: "button" %></a>
+  <%= link "Sign in with Google", to: "/auth/google?scope=email%20profile", class: "button" %></a>
 </p>
