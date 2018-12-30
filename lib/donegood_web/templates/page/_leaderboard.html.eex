@@ -8,7 +8,7 @@
 </h2>
 <table>
   <tr>
-    <th>Period starting</th>
+    <th></th>
     <%= for user <- @users do %>
       <th><%= user.name %></th>
     <% end %>

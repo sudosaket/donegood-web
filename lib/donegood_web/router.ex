@@ -17,6 +17,7 @@ defmodule DonegoodWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
   end
 
   scope "/auth", DonegoodWeb do
@@ -38,6 +39,13 @@ defmodule DonegoodWeb.Router do
     resources "/deeds", DeedController do
       resources "/comments", CommentController
     end
+  end
+
+  scope "api", DonegoodWeb do
+    pipe_through(:api)
+    
+    resources "/deeds", DeedController
+
   end
 
   # Other scopes may use custom stacks.
