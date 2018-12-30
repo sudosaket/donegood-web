@@ -1,2 +1,4 @@
 <h1>Welcome</h1>
-<p>Sign in to continue. ↗</p>
+<p>
+  <%= link "Sign in with Google", to: "/auth/google", class: "button" %></a>
+</p>
