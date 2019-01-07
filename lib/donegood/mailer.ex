@@ -7,7 +7,7 @@ end
 defmodule Donegood.Email do
   import Bamboo.Email
 
-  @from "from@donegood.app"
+  @from "donegood@donegood.app"
 
   def welcome_email(user) do
     new_email(
