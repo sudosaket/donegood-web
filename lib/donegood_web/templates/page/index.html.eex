@@ -5,7 +5,7 @@
   <%= if user.username != nil do %>
     <li>
       <a href="<%= Routes.competition_path(@conn, :fixture, current_user(@conn).username, user.username)%>">
-        <%= current_user(@conn).username %> VS <%= user.name %>
+        VS <%= user.name %>
       </a>
     </li>
   <% end %>

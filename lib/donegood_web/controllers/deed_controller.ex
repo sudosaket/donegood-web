@@ -5,6 +5,8 @@ defmodule DonegoodWeb.DeedController do
   alias Donegood.Deeds.Deed
   alias Donegood.Comments
   alias Donegood.Comments.Comment
+  import Phoenix.HTML.Link
+
 
   plug Guardian.Plug.EnsureAuthenticated
 
@@ -29,8 +31,11 @@ defmodule DonegoodWeb.DeedController do
     case Deeds.create_deed(deed) do
       {:ok, _deed} ->
         conn
-        |> put_flash(:info, "Deed created successfully. Add another?")
-        |> redirect(to: Routes.deed_path(conn, :new))
+        |> put_flash(:info, [
+          "Deed created successfully. ",
+          link("Add another?", to: Routes.deed_path(conn, :new))
+          ])
+        |> redirect(to: "/")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         IO.puts("Failed to create deed with")
