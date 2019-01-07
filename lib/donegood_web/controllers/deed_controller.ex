@@ -35,7 +35,7 @@ defmodule DonegoodWeb.DeedController do
           "Deed created successfully. ",
           link("Add another?", to: Routes.deed_path(conn, :new))
           ])
-        |> redirect(to: "/")
+        |> Phoenix.Controller.redirect(to: NavigationHistory.last_path(conn, -1))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         IO.puts("Failed to create deed with")

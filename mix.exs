@@ -53,6 +53,7 @@ defmodule Donegood.MixProject do
       {:timex, "~> 3.0"},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:bamboo, "~> 1.1"},
+      {:navigation_history, "~> 0.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
