@@ -20,7 +20,7 @@ defmodule Donegood.Email do
   end
 
   def new_comment(comment, recipient, link) do
-    body = "Hi " <> recipient.name <> ", " <> comment.user.name <> " wrote <blockquote>" <> comment.body <> "</blockquote> http://www.donegood.app" <> link
+    body = "Hi " <> recipient.name <> ", " <> comment.user.name <> " wrote <blockquote>" <> comment.body <> "</blockquote> https://donegood.app" <> link
     new_email(
       to: recipient.email,
       from: @from,
