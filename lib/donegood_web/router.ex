@@ -35,6 +35,7 @@ defmodule DonegoodWeb.Router do
     pipe_through [:browser, :browser_auth]
 
     get "/", PageController, :index
+    get "/:username/vs/:other_username", CompetitionController, :fixture
     resources "/users", UserController
     resources "/deeds", DeedController do
       resources "/comments", CommentController
@@ -43,7 +44,7 @@ defmodule DonegoodWeb.Router do
 
   scope "api", DonegoodWeb do
     pipe_through(:api)
-    
+
     resources "/deeds", DeedController
 
   end

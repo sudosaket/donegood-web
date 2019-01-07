@@ -42,6 +42,7 @@ defmodule DonegoodWeb do
       import DonegoodWeb.ErrorHelpers
       import DonegoodWeb.Gettext
       alias DonegoodWeb.Router.Helpers, as: Routes
+      import DonegoodWeb.UserHelper
     end
   end
 

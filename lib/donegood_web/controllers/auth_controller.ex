@@ -20,6 +20,7 @@ defmodule DonegoodWeb.AuthController do
         |> prompt_if_email_missing(user)
         |> Guardian.Plug.sign_in(user)
         |> redirect(to: "/")
+
       {:error, reason} ->
         conn
         |> put_flash(:error, "Could not authenticate because #{reason}")

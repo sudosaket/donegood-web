@@ -1,6 +1,11 @@
 <h1>Show User</h1>
 
 <ul>
+  <li>
+    <strong>Username:</strong>
+    <%= @user.username %>
+  </li>
+
 
   <li>
     <strong>Name:</strong>
@@ -12,30 +17,7 @@
     <%= @user.email %>
   </li>
 
-  <li>
-    <strong>Facebook:</strong>
-    <%= @user.facebook_id %>
-  </li>
 
-  <li>
-    <strong>Facebook token:</strong>
-    <%= @user.facebook_token %>
-  </li>
-
-  <li>
-    <strong>Google:</strong>
-    <%= @user.google_id %>
-  </li>
-
-  <li>
-    <strong>Google token:</strong>
-    <%= @user.google_token %>
-  </li>
-
-  <li>
-    <strong>Twitter:</strong>
-    <%= @user.twitter_id %>
-  </li>
 
 </ul>
 

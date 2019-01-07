@@ -25,15 +25,6 @@ defmodule Donegood.Deeds do
 
 
 
-  def weekly_leaderboard_scores do
-    query =
-      from deed in Deed,
-        join: user in assoc(deed, :user),
-        select: [user.name, sum(deed.score), deed.when, deed.id, deed.user_id],
-        group_by: [deed.when, deed.user_id, user.name, deed.id, deed.score]
-    Repo.all(query)
-  end
-
 
   def deeds_for_period(start_date, user) do
     query =

@@ -1,0 +1,9 @@
+
+<%= render "_leaderboard.html",
+  conn: @conn,
+  current_user: @current_user,
+  weekly_leaderboard_scores: Donegood.Competitions.weekly_leaderboard_scores,
+  users: @competing_users,
+  start_dates: Donegood.Competitions.start_dates
+   %>
+  <%# render "_overview.html", conn: @conn, current_user: @current_user %>

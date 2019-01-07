@@ -66,7 +66,7 @@ defmodule Donegood.UserFromAuth do
     User.changeset(%User{}, %{
       name: auth.info.name,
       email: auth.info.email,
-      picture: auth.info.picture,
+      picture: auth.info.image,
       google_id: auth.uid,
       google_token: auth.credentials.token
       })
