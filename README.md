@@ -1,22 +1,17 @@
 # Donegood
+This app uses Elixir and Phoenix. Learn more [here](https://phoenixframework.org).
 
-To start your Phoenix server:
-
+To start the server:
 - Install dependencies with `mix deps.get`
 - Create and migrate your database with `mix ecto.setup`
 - Install Node.js dependencies with `cd assets && npm install`
 - Start Phoenix endpoint with `mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can visit [`localhost:4015`](http://localhost:4015) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+# Roadmap
+See [projects](https://github.com/grandpodcast/donegood-web/projects).
 
-# Features
-
-## Primary use cases
-
-- [ ] Michael or Ivanka can log in with... I guess Google?
-- [ ] Michael or Ivanka can add and edit and list deeds with a title, score, date and recurrence
 
 ## Implementation
 
