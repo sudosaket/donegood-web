@@ -1,4 +1,7 @@
 <h1>Welcome</h1>
-<p>
-  <%= link "Sign in with Google", to: "/auth/google?scope=email%20profile", class: "button" %></a>
-</p>
+<p>DoneGood is a platform where you can compete to do more good in the world.</p>
+<p>Picked up some litter? Get a point. Take a plastic bag in a shop? Lose a point. Help a friend? A stranger? Donate to charity? Get points for the little things <em>and</em> the big things.</p>
+<p>What once was a drop in the ocean now helps you beat a friend's score.</p>
+<p>When more people do more good, everybody wins.</p>
+<%= render "_signin.html" %>
+<p>For more about this, listen to <a href="https://grandpodcast.com">Michael & Ivanka's Grand Podcast</a></p>

@@ -18,12 +18,15 @@
   <%= error_tag f, :when %>
 
   <%= label f, :score %>
+  <p><%= link "How many points should I get?", to: Routes.page_path(@conn,:faq) %></p>
   <%= for value <- [5,4,3,2,1,-1,-2,-3,-4,-5] do %>
     <span class="score-button">
       <%= radio_button f, :score, value %>
       <%= label f, String.to_atom("score_" <> (if value < 0, do: "_", else: "" ) <> inspect(abs(value))), Kernel.inspect(value) %>
+
     </span>
   <% end %>
+
   <%= error_tag f, :score %>
   <p>
     <%= label f, :repeats, "Repeats every week?", style: "display: inline;" %>

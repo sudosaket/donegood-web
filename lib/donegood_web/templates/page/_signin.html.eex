@@ -1,0 +1,3 @@
+<p>
+  <%= link "Sign in with Google", to: "/auth/google?scope=email%20profile", class: "button" %></a>
+</p>

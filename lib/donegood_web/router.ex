@@ -31,12 +31,20 @@ defmodule DonegoodWeb.Router do
     post "/:provider/callback", AuthController, :callback
   end
 
+  scope "/", DonegoodWeb do
+    pipe_through [:browser]
+
+    get "/:username/vs/:other_username", CompetitionController, :fixture
+    get "/welcome", PageController, :welcome
+    get "/about/faq", PageController, :faq 
+
+  end
 
   scope "/", DonegoodWeb do
     pipe_through [:browser, :browser_auth]
 
     get "/", PageController, :index
-    get "/:username/vs/:other_username", CompetitionController, :fixture
+
     resources "/users", UserController
     resources "/deeds", DeedController do
       resources "/comments", CommentController
