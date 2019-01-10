@@ -21,8 +21,8 @@
          row.user.name
        end
       %></td>
-      <td><%= row.this_week.points %></td>
-      <td><%= row.this_week.acts %></td>
+      <td class="big-number"><%= row.this_week.points %></td>
+      <td class="big-number"><%= row.this_week.acts %></td>
     </tr>
   <% end %>
 </table>

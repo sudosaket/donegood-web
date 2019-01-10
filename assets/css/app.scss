@@ -61,10 +61,6 @@ table.league-table{
   overflow-x: auto;
 
 }
-table.league-table *{
-  white-space: nowrap;
-
-}
 .feedback{
 
 }
@@ -77,6 +73,10 @@ table.league-table *{
 }
 .this-week td{
   vertical-align: middle;
+  &.big-number{
+    font-size: 36px;
+  }
+
 }
 .current-user {
   img{
