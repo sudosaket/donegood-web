@@ -4,4 +4,4 @@
 <p>What once was a drop in the ocean now helps you beat a friend's score.</p>
 <p>When more people do more good, everybody wins.</p>
 <%= render "_signin.html" %>
-<p>For more about this, listen to <a href="https://grandpodcast.com">Michael & Ivanka's Grand Podcast</a></p>
+<p>For more about this, listen to <a href="https://grandpodcast.com">Michael & Ivanka's Grand Podcast</a> and/or <a href="/michael/vs/ivanka">see their leaderboard here</a>.</p>

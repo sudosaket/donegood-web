@@ -24,8 +24,6 @@ defmodule Donegood.Deeds do
   end
 
 
-
-
   def deeds_for_period(start_date, user) do
     query =
       from deed in Deed,

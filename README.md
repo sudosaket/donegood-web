@@ -1,5 +1,5 @@
 # Donegood
-This app uses Elixir and Phoenix. Learn more [here](https://phoenixframework.org).
+This app uses Elixir and Phoenix. Learn more about the framework [here](https://phoenixframework.org).
 
 To start the server:
 - Install dependencies with `mix deps.get`

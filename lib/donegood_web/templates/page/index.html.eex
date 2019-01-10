@@ -1,12 +1,61 @@
 <h1>Welcome</h1>
-<h2>How are things standing?</h2>
+<p>Here's the league table. Click a fixture for more details.</p>
 <% start_date = Donegood.Competitions.start_dates |> List.first %>
-<%= for user <- @users |> List.delete(current_user(@conn)) do %>
-  <%= if user.username != nil do %>
-    <li>
-      <a href="<%= Routes.competition_path(@conn, :fixture, current_user(@conn).username, user.username)%>">
-        VS <%= user.name %>
-      </a>
-    </li>
+<table>
+  <tr>
+    <th></th>
+    <th colspan="2">This week</th>
+    <th colspan="5">Last 4 weeks</th>
+    <th colspan="5">All time</th>
+  </tr>
+  <tr>
+    <th>Fixture</th>
+    <!-- This week -->
+    <th>Points</th>
+    <th>Acts</th>
+
+    <!-- Last 4 weeks -->
+    <th>Points</th>
+    <th>Acts</th>
+    <th>Wins</th>
+    <th>Losses</th>
+    <th>Draws</th>
+
+    <!-- All time -->
+    <th>Points</th>
+    <th>Acts</th>
+    <th>Wins</th>
+    <th>Losses</th>
+    <th>Draws</th>
+  </tr>
+  <% me = current_user(@conn) %>
+  <%= for row <- @rows  do %>
+    <%= if row.user.username != nil do %>
+      <tr>
+        <td>
+          <a href="<%= Routes.competition_path(@conn, :fixture, me.username, row.user.username)%>">
+            <%= me.username%> vs <%= row.user.username %>
+          </a>
+        </td>
+        <!-- this week -->
+        <td><%= @my_row.this_week.points %> / <%= row.this_week.points %></td>
+        <td><%= @my_row.this_week.acts %> / <%= row.this_week.acts %></td>
+
+        <!-- last 4 weeks -->
+        <td><%= @my_row.last_4_weeks.points %> / <%= row.last_4_weeks.points %></td>
+        <td><%= @my_row.last_4_weeks.acts %> / <%= row.last_4_weeks.acts %></td>
+        <td><%= row.last_4_weeks.wins %></td>
+        <td><%= row.last_4_weeks.losses %></td>
+        <td><%= row.last_4_weeks.draws %></td>
+
+        <!-- All time -->
+        <td><%= @my_row.all_time.points %> / <%=  row.all_time.points %></td>
+        <td><%= @my_row.all_time.acts %> / <%=    row.all_time.acts %></td>
+        <td><%= row.all_time.wins %></td>
+        <td><%= row.all_time.losses %> </td>
+        <td><%= row.all_time.draws %></td>
+
+      </tr>
+    <% end %>
   <% end %>
-<% end %>
+</table>

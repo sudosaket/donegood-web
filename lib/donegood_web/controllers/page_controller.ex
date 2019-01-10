@@ -6,10 +6,14 @@ defmodule DonegoodWeb.PageController do
   end
 
   def index(conn, _params) do
+    me = conn.assigns[:current_user]
+    vs_users = Donegood.Accounts.list_users |> List.delete(me)
+    my_row = Donegood.Competitions.league_table_row(me, me)
     conn
     |> redirect_if_username_missing()
     |> render("index.html", %{
-      users: Donegood.Accounts.list_users
+      my_row: my_row,
+      rows: vs_users |> Enum.map(fn user -> Donegood.Competitions.league_table_row(user, me) end)
       })
   end
 
