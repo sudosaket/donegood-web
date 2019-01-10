@@ -27,7 +27,7 @@ defmodule Donegood.Competitions do
         weekly_result(start_date, me, user)
       end)
     this_week = List.first(start_dates)
-    four_weeks_ago = start_dates |> Enum.at(4)
+    four_weeks_ago = start_dates |> Enum.at(5)
     this_week_fixture = %{
       points: Deeds.score_for_period(this_week, user),
       acts: Deeds.deeds_for_period(this_week, user) |> Enum.count
@@ -50,12 +50,12 @@ defmodule Donegood.Competitions do
       )
     }
   end
-  
+
   defp fixture_since(start_date, user, weekly_results) do
     IO.inspect(start_date: start_date, weekly_results: weekly_results)
     %{
-      points: Deeds.score_for_period(start_date, user),
-      acts: Deeds.deeds_for_period(start_date, user) |> Enum.count,
+      points: weekly_results |> Enum.map(fn week -> week.their_points end) |> Enum.sum,
+      acts: weekly_results |> Enum.map(fn week -> week.their_acts_count end) |> Enum.sum,
       wins: weekly_results |> Enum.map(fn week -> if week.result == :win, do: 1, else: 0 end )|> Enum.sum,
       losses: weekly_results |> Enum.map(fn week -> if week.result == :loss, do: 1, else: 0 end )|> Enum.sum,
       draws: weekly_results |> Enum.map(fn week -> if week.result == :draw, do: 1, else: 0 end )|> Enum.sum
