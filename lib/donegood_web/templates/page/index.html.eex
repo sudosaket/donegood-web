@@ -1,7 +1,7 @@
 <h1>Welcome</h1>
 <p>Here's the league table. Click a fixture for more details.</p>
 <% start_date = Donegood.Competitions.start_dates |> List.first %>
-<table>
+<table class="league-table">
   <tr>
     <th></th>
     <th colspan="2">This week</th>

@@ -49,3 +49,12 @@ form p {
 .pull-right {
   float: right;
 }
+table.league-table{
+  overflow: scroll;
+  overflow-x: auto;
+  
+}
+table.league-table *{
+  white-space: nowrap;
+
+}
