@@ -67,6 +67,7 @@ defmodule Donegood.Competitions do
     their_points = Deeds.score_for_period(start_date, them)
 
     result = cond do
+      (NaiveDateTime.compare(me.inserted_at, start_date) == :gt or NaiveDateTime.compare(them.inserted_at, start_date) == :gt) -> :not_applicable
       (my_points > their_points) -> :win
       (my_points < their_points) -> :loss
       true -> :draw
