@@ -1,5 +1,4 @@
-<h1>Welcome</h1>
-<p>Here's the league table. Click a fixture for more details.</p>
+<h1>League of Extraordinary Donegooders</h1>
 <% start_date = Donegood.Competitions.start_dates |> List.first %>
 <table class="league-table">
   <tr>
