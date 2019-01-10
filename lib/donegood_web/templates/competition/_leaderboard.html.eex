@@ -1,5 +1,5 @@
 <h2>
-  Leaderboard
+  <%= Enum.at(@users,0).name %> vs <%= Enum.at(@users,1).name %>
   <span class="pull-right">
     <a href="/deeds/new" class="button">
       ＋Add
