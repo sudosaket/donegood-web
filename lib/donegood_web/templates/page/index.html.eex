@@ -1,60 +1,78 @@
-<h1>League of Extraordinary Donegooders</h1>
+<h1>Our  League</h1>
 <% start_date = Donegood.Competitions.start_dates |> List.first %>
-<table class="league-table">
+<% me = current_user(@conn) %>
+<table class="this-week">
   <tr>
-    <th></th>
     <th colspan="2">This week</th>
-    <th colspan="5">Last 4 weeks</th>
-    <th colspan="5">All time</th>
+    <th>Points</th>
+    <th>Acts</th>
   </tr>
+  <%= for row <- @all_rows do %>
+    <tr>
+      <td class="avatar"><%= if row.user != me do
+        link img_tag(row.user.picture), to: Routes.competition_path(@conn, :fixture, me.username, row.user.username)
+      else
+        img_tag(row.user.picture)
+      end
+        %></td>
+      <td><%= if row.user != me do
+         link row.user.name, to: Routes.competition_path(@conn, :fixture, me.username, row.user.username)
+       else
+         row.user.name
+       end
+      %></td>
+      <td><%= row.this_week.points %></td>
+      <td><%= row.this_week.acts %></td>
+    </tr>
+  <% end %>
+</table>
+
+<table>
   <tr>
-    <th>Fixture</th>
-    <!-- This week -->
-    <th>Points</th>
-    <th>Acts</th>
-
-    <!-- Last 4 weeks -->
-    <th>Points</th>
-    <th>Acts</th>
+    <th>Last 4 weeks</th>
     <th>Wins</th>
     <th>Losses</th>
     <th>Draws</th>
-
-    <!-- All time -->
     <th>Points</th>
     <th>Acts</th>
-    <th>Wins</th>
-    <th>Losses</th>
-    <th>Draws</th>
   </tr>
-  <% me = current_user(@conn) %>
-  <%= for row <- @rows  do %>
-    <%= if row.user.username != nil do %>
-      <tr>
-        <td>
-          <a href="<%= Routes.competition_path(@conn, :fixture, me.username, row.user.username)%>">
-            <%= me.username%> vs <%= row.user.username %>
-          </a>
-        </td>
-        <!-- this week -->
-        <td><%= @my_row.this_week.points %> / <%= row.this_week.points %></td>
-        <td><%= @my_row.this_week.acts %> / <%= row.this_week.acts %></td>
+  <%= for row <- @vs_rows  do %>
+    <tr>
+      <td>
+        <a href="<%= Routes.competition_path(@conn, :fixture, me.username, row.user.username)%>">
+          <%= me.username%> vs <%= row.user.username %>
+        </a>
+      </td>
+      <td><%= row.last_4_weeks.wins %></td>
+      <td><%= row.last_4_weeks.losses %></td>
+      <td><%= row.last_4_weeks.draws %></td>
+      <td><%= @my_row.last_4_weeks.points %> / <%= row.last_4_weeks.points %></td>
+      <td><%= @my_row.last_4_weeks.acts %> / <%= row.last_4_weeks.acts %></td>
+    </tr>
+  <% end %>
+</table>
 
-        <!-- last 4 weeks -->
-        <td><%= @my_row.last_4_weeks.points %> / <%= row.last_4_weeks.points %></td>
-        <td><%= @my_row.last_4_weeks.acts %> / <%= row.last_4_weeks.acts %></td>
-        <td><%= row.last_4_weeks.wins %></td>
-        <td><%= row.last_4_weeks.losses %></td>
-        <td><%= row.last_4_weeks.draws %></td>
-
-        <!-- All time -->
-        <td><%= @my_row.all_time.points %> / <%=  row.all_time.points %></td>
-        <td><%= @my_row.all_time.acts %> / <%=    row.all_time.acts %></td>
-        <td><%= row.all_time.wins %></td>
-        <td><%= row.all_time.losses %> </td>
-        <td><%= row.all_time.draws %></td>
-
-      </tr>
-    <% end %>
+<table>
+  <tr>
+    <th>All time</th>
+    <th>Wins</th>
+    <th>Losses</th>
+    <th>Draws</th>
+    <th>Points</th>
+    <th>Acts</th>
+  </tr>
+  <%= for row <- @vs_rows  do %>
+    <tr>
+      <td>
+        <a href="<%= Routes.competition_path(@conn, :fixture, me.username, row.user.username)%>">
+          <%= me.username%> vs <%= row.user.username %>
+        </a>
+      </td>
+      <td><%= row.all_time.wins %></td>
+      <td><%= row.all_time.losses %> </td>
+      <td><%= row.all_time.draws %></td>
+      <td><%= @my_row.all_time.points %> / <%=  row.all_time.points %></td>
+      <td><%= @my_row.all_time.acts %> / <%=    row.all_time.acts %></td>
+    </tr>
   <% end %>
 </table>

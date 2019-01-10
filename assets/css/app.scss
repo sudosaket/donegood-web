@@ -1,13 +1,20 @@
-/* This file is for your main application css. */
-
 @import "./phoenix.css";
+
+$green: #8CDB4D;
+$red: #DB4D4D;
+
 h2 span {
   float: right;
   font-size: 60%;
 }
 footer {
   position: fixed;
+  right: 0;
   bottom: 10px;
+  height: 40px;
+  background-color: white;
+  z-index: 100;
+  padding: 10px;
 }
 td,
 th {
@@ -52,9 +59,28 @@ form p {
 table.league-table{
   overflow: scroll;
   overflow-x: auto;
-  
+
 }
 table.league-table *{
   white-space: nowrap;
 
+}
+.feedback{
+
+}
+.avatar{
+  width: 60px;
+  padding: 8px 0 0 0;
+  img{
+    border-radius: 32px;
+  }
+}
+.this-week td{
+  vertical-align: middle;
+}
+.current-user {
+  img{
+    border-radius: 10px;
+    vertical-align:top;
+  }
 }

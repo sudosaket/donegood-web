@@ -1,5 +1,5 @@
 <%= if current_user_exists(@conn) do %>
-  <p>
+  <p class="current-user">
     <img src="<%= current_user(@conn).picture %>" width="20"/>
     <%= current_user(@conn).name %>
     <a href="/auth/logout">Log out</a>

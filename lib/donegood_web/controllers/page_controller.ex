@@ -9,11 +9,17 @@ defmodule DonegoodWeb.PageController do
     me = conn.assigns[:current_user]
     vs_users = Donegood.Accounts.list_users |> List.delete(me) |> Enum.reverse()
     my_row = Donegood.Competitions.league_table_row(me, me)
+    vs_rows = vs_users |> Enum.map(fn user -> Donegood.Competitions.league_table_row(user, me) end)
     conn
     |> redirect_if_username_missing()
     |> render("index.html", %{
       my_row: my_row,
-      rows: vs_users |> Enum.map(fn user -> Donegood.Competitions.league_table_row(user, me) end)
+      vs_rows: vs_rows,
+      all_rows:
+        vs_rows
+        |> List.insert_at(0, my_row)
+        |> Enum.sort_by(fn row -> row.this_week.points end)
+        |> Enum.reverse
       })
   end
 
