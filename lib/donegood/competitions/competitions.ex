@@ -32,6 +32,11 @@ defmodule Donegood.Competitions do
       points: Deeds.score_for_period(this_week, user),
       acts: Deeds.deeds_for_period(this_week, user) |> Enum.count
     }
+    all_time_fixture = fixture_since(
+      List.last(start_dates),
+      user,
+      weekly_results |> List.delete( List.first(weekly_results) )
+    )
     %Donegood.Competitions.LeagueTableRow{
       user: user,
       this_week: this_week_fixture,
@@ -43,11 +48,10 @@ defmodule Donegood.Competitions do
           and NaiveDateTime.compare(this_week, week.start_date) == :gt
         end)
       ),
-      all_time: fixture_since(
-        List.last(start_dates),
-        user,
-        weekly_results |> List.delete( List.first(weekly_results) )
-      )
+      all_time:
+        all_time_fixture
+        |> Map.put(:points, all_time_fixture.points + this_week_fixture.points)
+        |> Map.put(:acts, all_time_fixture.acts + this_week_fixture.acts)
     }
   end
 
