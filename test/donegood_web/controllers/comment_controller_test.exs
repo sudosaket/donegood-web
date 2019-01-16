@@ -3,7 +3,7 @@ defmodule DonegoodWeb.CommentControllerTest do
 
   alias Donegood.Comments
 
-  @create_attrs %{body: "some body"}
+  @create_attrs %{body: "some body", user_id: 1, deed_id: 1}
   @update_attrs %{body: "some updated body"}
   @invalid_attrs %{body: nil}
 
@@ -11,34 +11,31 @@ defmodule DonegoodWeb.CommentControllerTest do
     {:ok, comment} = Comments.create_comment(@create_attrs)
     comment
   end
-
-  describe "index" do
-    test "lists all comments", %{conn: conn} do
-      conn = get(conn, Routes.comment_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Comments"
-    end
+  def fixture(:deed) do
+    {:ok, deed} = DonegoodWeb.DeedControllerTest.fixture(:deed)
+    deed
   end
 
   describe "new comment" do
     test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.comment_path(conn, :new))
+      conn = get(conn, Routes.deed_comment_path(conn, :new, fixture(:deed)))
       assert html_response(conn, 200) =~ "New Comment"
     end
   end
 
   describe "create comment" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.comment_path(conn, :create), comment: @create_attrs)
+      conn = post(conn, Routes.deed_comment_path(conn, :create, fixture(:deed)), comment: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.comment_path(conn, :show, id)
 
-      conn = get(conn, Routes.comment_path(conn, :show, id))
+      conn = get(conn, Routes.deed_comment_path(conn, :show,fixture(:deed), id))
       assert html_response(conn, 200) =~ "Show Comment"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.comment_path(conn, :create), comment: @invalid_attrs)
+      conn = post(conn, Routes.deed_comment_path(conn, :create, fixture(:deed)), comment: @invalid_attrs)
       assert html_response(conn, 200) =~ "New Comment"
     end
   end
@@ -47,7 +44,7 @@ defmodule DonegoodWeb.CommentControllerTest do
     setup [:create_comment]
 
     test "renders form for editing chosen comment", %{conn: conn, comment: comment} do
-      conn = get(conn, Routes.comment_path(conn, :edit, comment))
+      conn = get(conn, Routes.deed_comment_path(conn, :edit, fixture(:deed), comment))
       assert html_response(conn, 200) =~ "Edit Comment"
     end
   end
@@ -56,7 +53,7 @@ defmodule DonegoodWeb.CommentControllerTest do
     setup [:create_comment]
 
     test "redirects when data is valid", %{conn: conn, comment: comment} do
-      conn = put(conn, Routes.comment_path(conn, :update, comment), comment: @update_attrs)
+      conn = put(conn, Routes.deed_comment_path(conn, :update, fixture(:deed), comment), comment: @update_attrs)
       assert redirected_to(conn) == Routes.comment_path(conn, :show, comment)
 
       conn = get(conn, Routes.comment_path(conn, :show, comment))
@@ -64,7 +61,7 @@ defmodule DonegoodWeb.CommentControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, comment: comment} do
-      conn = put(conn, Routes.comment_path(conn, :update, comment), comment: @invalid_attrs)
+      conn = put(conn, Routes.deed_comment_path(conn, :update, fixture(:deed), comment), comment: @invalid_attrs)
       assert html_response(conn, 200) =~ "Edit Comment"
     end
   end
@@ -73,7 +70,7 @@ defmodule DonegoodWeb.CommentControllerTest do
     setup [:create_comment]
 
     test "deletes chosen comment", %{conn: conn, comment: comment} do
-      conn = delete(conn, Routes.comment_path(conn, :delete, comment))
+      conn = delete(conn, Routes.deed_comment_path(conn, :delete, fixture(:deed), comment))
       assert redirected_to(conn) == Routes.comment_path(conn, :index)
       assert_error_sent 404, fn ->
         get(conn, Routes.comment_path(conn, :show, comment))

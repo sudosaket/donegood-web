@@ -17,5 +17,7 @@ defmodule Donegood.Deeds.ScoreChange do
     score_change
     |> cast(attrs, [:from, :to, :user_id, :deed_id])
     |> validate_required([:from, :to, :user_id, :deed_id])
+    |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:deed_id)
   end
 end

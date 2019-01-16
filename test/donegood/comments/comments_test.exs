@@ -6,7 +6,7 @@ defmodule Donegood.CommentsTest do
   describe "comments" do
     alias Donegood.Comments.Comment
 
-    @valid_attrs %{body: "some body"}
+    @valid_attrs %{body: "some body", deed_id: 1}
     @update_attrs %{body: "some updated body"}
     @invalid_attrs %{body: nil}
 

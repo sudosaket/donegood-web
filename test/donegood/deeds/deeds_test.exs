@@ -6,7 +6,7 @@ defmodule Donegood.DeedsTest do
   describe "deeds" do
     alias Donegood.Deeds.Deed
 
-    @valid_attrs %{score: 42, title: "some title", when: ~D[2010-04-17], user_id: 1}
+    @valid_attrs %{score: 42, title: "some title", when: ~D[2010-04-17], user_id: 1, created_by_user_id: 2}
     @update_attrs %{score: 43, title: "some updated title", when: ~D[2011-05-18]}
     @invalid_attrs %{score: nil, title: nil, when: nil}
 
@@ -69,7 +69,7 @@ defmodule Donegood.DeedsTest do
   describe "score_changes" do
     alias Donegood.Deeds.ScoreChange
 
-    @valid_attrs %{from: 42, to: 42}
+    @valid_attrs %{from: 42, to: 42, user_id: 1, deed_id: 1}
     @update_attrs %{from: 43, to: 43}
     @invalid_attrs %{from: nil, to: nil}
 

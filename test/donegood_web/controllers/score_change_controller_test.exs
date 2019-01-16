@@ -3,7 +3,7 @@ defmodule DonegoodWeb.ScoreChangeControllerTest do
 
   alias Donegood.Deeds
 
-  @create_attrs %{from: 42, to: 42}
+  @create_attrs %{from: 42, to: 42, user_id: 1, deed_id: 1}
   @update_attrs %{from: 43, to: 43}
   @invalid_attrs %{from: nil, to: nil}
 

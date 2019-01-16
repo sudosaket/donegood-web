@@ -17,5 +17,7 @@ defmodule Donegood.Comments.Comment do
     comment
     |> cast(attrs, [:body, :user_id, :deed_id])
     |> validate_required([:body, :user_id, :deed_id])
+    |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:deed_id)
   end
 end
