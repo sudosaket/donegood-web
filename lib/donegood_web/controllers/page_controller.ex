@@ -7,7 +7,7 @@ defmodule DonegoodWeb.PageController do
 
   def index(conn, _params) do
     me = conn.assigns[:current_user]
-    vs_users = Donegood.Accounts.list_users |> List.delete(me) |> Enum.reverse()
+    vs_users = Donegood.Accounts.participating_users() |> List.delete(me) |> Enum.reverse()
     my_row = Donegood.Competitions.league_table_row(me, me)
     vs_rows = vs_users |> Enum.map(fn user -> Donegood.Competitions.league_table_row(user, me) end)
     conn

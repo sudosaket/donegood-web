@@ -1,8 +1,9 @@
 <%= if current_user_exists(@conn) do %>
+<% current_user = current_user(@conn) %>
   <p class="current-user">
-    <img src="<%= current_user(@conn).picture %>" width="20"/>
-    <%= current_user(@conn).name %>
-    <a href="/auth/logout">Log out</a>
+    <img src="<%= current_user.picture %>" width="20"/>
+    <%= link current_user.name, to: Routes.user_path(@conn, :edit, current_user.id) %>
+    | <a href="/auth/logout">Log out</a>
   </p>
 <% else %>
   <!-- <a href="/auth/facebook?scope=email,user_friends" class="">Facebook</a>

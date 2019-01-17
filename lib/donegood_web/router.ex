@@ -36,7 +36,7 @@ defmodule DonegoodWeb.Router do
 
     get "/:username/vs/:other_username", CompetitionController, :fixture
     get "/welcome", PageController, :welcome
-    get "/about/faq", PageController, :faq 
+    get "/about/faq", PageController, :faq
 
   end
 
@@ -45,7 +45,7 @@ defmodule DonegoodWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/users", UserController
+    resources "/users", UserController, only: [:edit, :update, :show]
     resources "/deeds", DeedController do
       resources "/comments", CommentController
     end

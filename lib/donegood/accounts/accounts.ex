@@ -21,6 +21,11 @@ defmodule Donegood.Accounts do
     Repo.all(User)
   end
 
+  def participating_users do
+    query = (from u in User, where: u.participating == ^true)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single user.
 

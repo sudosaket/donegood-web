@@ -16,6 +16,14 @@
   <%= text_input f, :email %>
   <%= error_tag f, :email %>
 
+  <%= label f, :participating, "Participating?" %>
+  <p>
+    <%= checkbox f, :participating %>
+    <%= label f, :participating, "I am committed to do good in the world and will keep track of my activity here.", class: "plain" %>
+
+  </p>
+  <%= error_tag f, :participating %>
+
   <div>
     <%= submit "Save" %>
   </div>

@@ -3,10 +3,10 @@ defmodule DonegoodWeb.UserController do
 
   alias Donegood.Accounts
 
-  def index(conn, _params) do
-    users = Accounts.list_users()
-    render(conn, "index.html", users: users)
-  end
+  # def index(conn, _params) do
+  #   users = Accounts.list_users()
+  #   render(conn, "index.html", users: users)
+  # end
 
   # def new(conn, _params) do
   #   changeset = Accounts.change_user(%User{})
@@ -33,7 +33,13 @@ defmodule DonegoodWeb.UserController do
   def edit(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     changeset = Accounts.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset)
+    if user.id == conn.assigns.current_user.id do
+      render(conn, "edit.html", user: user, changeset: changeset)
+    else
+      conn
+      |> put_flash(:error, "You can't edit that user")
+      |> redirect(to: "/")
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
@@ -55,14 +61,14 @@ defmodule DonegoodWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    {:ok, _user} = Accounts.delete_user(user)
-
-    conn
-    |> put_flash(:info, "User deleted successfully.")
-    |> redirect(to: Routes.user_path(conn, :index))
-  end
+  # def delete(conn, %{"id" => id}) do
+  #   user = Accounts.get_user!(id)
+  #   {:ok, _user} = Accounts.delete_user(user)
+  #
+  #   conn
+  #   |> put_flash(:info, "User deleted successfully.")
+  #   |> redirect(to: Routes.user_path(conn, :index))
+  # end
 
 
 end
