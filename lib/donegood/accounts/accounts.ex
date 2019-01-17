@@ -27,7 +27,7 @@ defmodule Donegood.Accounts do
   end
 
   def lurkers do
-    query = (from u in User, where: u.participating != ^true)
+    query = (from u in User, where: is_nil(u.participating) or u.participating == false)
     Repo.all(query)
   end
 
