@@ -76,3 +76,9 @@
     </tr>
   <% end %>
 </table>
+
+
+<h3>Still in need of encouragment</h3>
+<p><%=
+  Enum.join(Enum.map(@lurkers, fn user -> user.username end), ", ")
+  %>.</p>

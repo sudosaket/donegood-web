@@ -26,6 +26,11 @@ defmodule Donegood.Accounts do
     Repo.all(query)
   end
 
+  def lurkers do
+    query = (from u in User, where: u.participating != ^true)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single user.
 

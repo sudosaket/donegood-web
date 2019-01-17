@@ -1,5 +1,7 @@
 defmodule DonegoodWeb.PageController do
   use DonegoodWeb, :controller
+  alias Donegood.{Accounts,Competitions}
+
 
   def welcome(conn, _params) do
     render(conn, "welcome.html")
@@ -7,12 +9,14 @@ defmodule DonegoodWeb.PageController do
 
   def index(conn, _params) do
     me = conn.assigns[:current_user]
-    vs_users = Donegood.Accounts.participating_users() |> List.delete(me) |> Enum.reverse()
-    my_row = Donegood.Competitions.league_table_row(me, me)
-    vs_rows = vs_users |> Enum.map(fn user -> Donegood.Competitions.league_table_row(user, me) end)
+    vs_users = Accounts.participating_users() |> List.delete(me) |> Enum.reverse()
+    my_row = Competitions.league_table_row(me, me)
+    vs_rows = vs_users |> Enum.map(fn user -> Competitions.league_table_row(user, me) end)
     conn
     |> redirect_if_username_missing()
+    |> flash_if_not_participating(me)
     |> render("index.html", %{
+      lurkers: Accounts.lurkers,
       my_row: my_row,
       vs_rows: vs_rows,
       all_rows:
@@ -46,5 +50,12 @@ defmodule DonegoodWeb.PageController do
         end
     end
 
+  end
+
+  defp flash_if_not_participating(conn,me) do
+    case me.participating do
+      true -> conn
+      _ -> put_flash(conn, :info, "You are not yet participating in the league. To join in, click your name above and check the 'Participating?' box.")
+    end
   end
 end
